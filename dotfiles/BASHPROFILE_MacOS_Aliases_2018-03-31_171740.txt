@@ -16,6 +16,7 @@ SEP=##=============================================##
 alias env2='export -p'  #List of all Shell VAR declared
 alias env='printenv'   #Same as above via another command. Shows _ VAR
 alias bashv="/usr/local/bin/bash --version | grep darwin | cut -c 19-35"
+alias less='less -FSRXc'  # Preferred 'less' implementation
 alias path='echo -e ${PATH//:/\\n}'  # path: Echo all executable Paths
 alias shopt='shopt'   # Show_options: display bash options settings
 alias term_size='echo "Rows=$(tput lines) Cols=$(tput cols)"'
@@ -79,21 +80,23 @@ up() {
 	cd $d
 }
 
-alias ls='ls -FGlAhpi'
-alias l.='ls -d .* -G'
-alias lss='ls -al | less'
-alias lf='\ls -F' # Marks DIR executables, symlinks
-alias lg='ls -al | grep ' #just add a term to search for
-alias lm='\ls -t | head -n 1'
-alias lsn='ls -n'  # UID and PID not names
-alias lsza='ls -r'  # Rev Alphabetcial Name listing
-alias lst='ls -ailhGtc'  # Sort by time
-alias lstr='ls -ctr'  # Sort Time but in reverse
-alias lswc='ls -al | wc -l'  # Items in DIR via ls with word count
-alias lsl='ls -lah@e -G | less'
-alias ld='ls -d */' # only Dirs
-alias ls.d='ls -ld `find . -maxdepth 1 -type d -o -type l`'  # Dot DIR Only
-alias less='less -FSRXc'  # Preferred 'less' implementation
+##=============== ls Aliases ==================##
+alias ls='ls -Fhail'  ## my long-all ls with inodes human attr/@*|=% 
+alias lss='\ls -al | less'  ## ls piped to less
+alias lsn='ls -n'  ## No Resolution of UID and PID to names
+alias lsza='\ls -r'  ## REVERSE Alphabetcial ls
+alias lswc='\ls -al | wc -l'  ## ls items Word Count
+alias ld='\ls -d */' ## DIR only ls
+alias l.='ls -ld .*'  ## Dotfiles only ls
+alias lsz='\ls -Shail'  ## Size Sort ls
+alias lszr='\ls -Shailr'  ## Size Sort ls in REVERSE
+alias lt='\ls -thail'  ## Time Sort ls
+alias ltr='\ls -thailr'  ## Time Sort ls in REVERSE
+alias lta='\ls -uhalnr'  ## Time Sort ls by ACCESS Time,so best to have ARG1=<somefile>
+alias ltm='\ls -thalnr'  ## Time Sort by Modification (default ls), so best with ARG1=<somefile>
+alias ltm2='\ls -thalnr | tail -n1'  ## Time Sort by Modification & pick the last 1 modified in the DIR
+alias ltb='\ls -Uhalnr'  ## Time Sort by BIRTH Time (btime)
+
 ##=========Edit Source Backup Dotfiles==========##
 alias so='source ~/.bash_profile && \cp ~/.bash_profile ~/.bash_profile.bak && \cp ~/.bash_profile ~/gitHub/vim-mac/dotfiles/BASHPROFILE_MacOS_Aliases_$(date "+%Y-%m-%d_%H%M%S").txt && echo "Yeah Baby!"'
 alias sovim='\cp ~/.vimrc ~/.vimrc.bak && \cp ~/.vimrc ~/github/vim-mac/dotfiles/VIMRC.$(date "+%b_%d_%Y_%H.%M.%S").txt && echo "Whatttyyyaaaaa"'
@@ -313,10 +316,11 @@ alias gf='git fetch'
 alias gpu='git pull'  #gpu: Git pull
 alias gp='git push'  #gp: Git pushi # Asks for user & pw but use token not pw
 alias gr='git revert HEAD'  #gr: Git revert HEAD
+alias gittar='tar cjvf ~/Desktop/github_mac.tbz ~/github'
 alias gd="git diff --color"	#gd: Git diff in color
 alias gt="git today --since='1 day ago'"	#gt:	Git last 24 hours
 alias gl="git log --pretty=format:'%h %ad | %s [%an]' --graph --since='30 days ago' --color"
-alias gogit='cd ~/Vim-rep && gs'
+alias gogit='cd ~/github/vim-mac/dotfiles && gs'
 alias gk='gitk --all&'
 alias gx='gitx --all'
 alias gitdelete='git add -u . && git commit -m "removing deleted files from tracking" && git push origin master'
