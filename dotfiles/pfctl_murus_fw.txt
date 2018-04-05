@@ -1,0 +1,99 @@
+PFCTL -sr at 2140
+————————
+Last login: Mon Jul 20 21:26:10 on ttys000
+Ronalds-MacBook-Pro:~ rdw99$ pfctl -sr
+pfctl: /dev/pf: Permission denied
+Ronalds-MacBook-Pro:~ rdw99$ sudo pfctl -sr
+Password:
+No ALTQ support in kernel
+ALTQ related functions disabled
+scrub-anchor "com.apple/*" all fragment reassemble
+pass quick on awdl0 all no state
+pass quick on p2p0 all no state
+block drop in log quick from <_blacklist> to any label "BlackList_IN"
+block drop out log quick from any to <_blacklist> label "BlackList_OUT"
+block return in log quick from <_adservers> to any label "adservers_IN"
+block return out log quick from any to <_adservers> label "adservers_OUT"
+block drop in quick from <sshguard> to any label "SSHGuard"
+block drop in log quick from <_threats> to any label "Threats_IN"
+block drop out log quick from any to <_threats> label "Threats_OUT"
+block drop in quick from no-route to any
+block drop in quick from urpf-failed to any
+block drop log inet all label "Block_V4"
+block drop log inet6 all label "Block_V6"
+pass on utun0 all no state
+pass on utun1 all no state
+anchor "com.apple/*" all
+pass proto icmp all keep state
+pass in quick proto udp from any port = 5353 to any port = 5353 keep state allow-opts
+pass out quick proto udp from any port = 5353 to any port = 5353 keep state allow-opts
+pass out quick proto tcp from any port = 68 to any port = 67 flags S/SA keep state
+pass out quick proto udp from any port = 68 to any port = 67 keep state
+pass in quick proto tcp from any port = 67 to any port = 68 flags S/SA keep state
+pass in quick proto udp from any port = 67 to any port = 68 keep state
+pass quick inet6 proto udp from any to any port = 546 keep state
+pass inet6 proto ipv6-icmp all icmp6-type echoreq keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type groupqry keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type grouprep keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type groupterm keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type routersol keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type routeradv keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type neighbrsol keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type neighbradv keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type 143 keep state allow-opts
+pass proto igmp all keep state allow-opts
+pass quick inet from any to 224.0.0.0/4 flags S/SA keep state allow-opts
+pass quick inet6 from any to ff00::/8 flags S/SA keep state allow-opts
+anchor "murus.inbound" all label "Inbound"
+anchor "murus.outbound" all label "Outbound"
+anchor "murus.inspector" all label "Inspector"
+anchor "murus.custom" all label "Custom_Rules"
+Ronalds-MacBook-Pro:~ rdw99$ 
+——————————————————
+
+Last login: Mon Jul 20 23:49:28 on ttys000
+Ronalds-MacBook-Pro:~ rdw99$ sudo pfctl -sr
+No ALTQ support in kernel
+ALTQ related functions disabled
+scrub-anchor "com.apple/*" all fragment reassemble
+pass quick on awdl0 all no state
+pass quick on p2p0 all no state
+block drop in log quick from <_blacklist> to any label "BlackList_IN"
+block drop out log quick from any to <_blacklist> label "BlackList_OUT"
+block return in log quick from <_adservers> to any label "adservers_IN"
+block return out log quick from any to <_adservers> label "adservers_OUT"
+block drop in quick from <sshguard> to any label "SSHGuard"
+block drop in log quick from <_threats> to any label "Threats_IN"
+block drop out log quick from any to <_threats> label "Threats_OUT"
+block drop in quick from no-route to any
+block drop in quick from urpf-failed to any
+block drop log inet all label "Block_V4"
+block drop log inet6 all label "Block_V6"
+pass on utun0 all no state
+pass on utun1 all no state
+anchor "com.apple/*" all
+pass proto icmp all keep state
+pass in quick proto udp from any port = 5353 to any port = 5353 keep state allow-opts
+pass out quick proto udp from any port = 5353 to any port = 5353 keep state allow-opts
+pass out quick proto tcp from any port = 68 to any port = 67 flags S/SA keep state
+pass out quick proto udp from any port = 68 to any port = 67 keep state
+pass in quick proto tcp from any port = 67 to any port = 68 flags S/SA keep state
+pass in quick proto udp from any port = 67 to any port = 68 keep state
+pass quick inet6 proto udp from any to any port = 546 keep state
+pass inet6 proto ipv6-icmp all icmp6-type echoreq keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type groupqry keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type grouprep keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type groupterm keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type routersol keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type routeradv keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type neighbrsol keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type neighbradv keep state allow-opts
+pass inet6 proto ipv6-icmp all icmp6-type 143 keep state allow-opts
+pass proto igmp all keep state allow-opts
+pass quick inet from any to 224.0.0.0/4 flags S/SA keep state allow-opts
+pass quick inet6 from any to ff00::/8 flags S/SA keep state allow-opts
+anchor "murus.inbound" all label "Inbound"
+anchor "murus.outbound" all label "Outbound"
+anchor "murus.inspector" all label "Inspector"
+anchor "murus.custom" all label "Custom_Rules"
+Ronalds-MacBook-Pro:~ rdw99$ 
