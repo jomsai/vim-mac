@@ -38,17 +38,18 @@ alias lta='\ls -uhalnr'  ## Time Sort ls by ACCESS Time,so best to have ARG1=<so
 alias ltm='\ls -thalnr'  ## Time Sort by Modification (default ls), so best with ARG1=<somefile>
 alias ltm2='\ls -thalnr | tail -n1'  ## Time Sort by Modification & pick the last 1 modified in the DIR
 alias ltb='\ls -Uhalnr'  ## Time Sort by BIRTH Time (btime)
+alias lssip='ls -lO /System /usr'  ## Check files protected by SIP
 ##=========Edit Source Backup Dotfiles==========##
 alias so='source ~/.bash_profile && \cp ~/.bash_profile ~/gitHub/vim-mac/dotfiles/BASHPROFILE_MacOS_$(date "+%Y-%m-%d_%H%M%S").txt && \cp ~/.bash_aliases ~/gitHub/vim-mac/dotfiles/BASHALIASES_MacOS_$(date "+%Y-%m-%d_%H%M%S").txt && echo "Yeah Baby!"'
-alias sovim='\cp ~/.vimrc ~/.vimrc.bak && \cp ~/.vimrc ~/github/vim-mac/dotfiles/VIMRC.$(date "+%b_%d_%Y_%H.%M.%S").txt && echo "Whatttyyyaaaaa"'
-alias sotmux='\cp ~/.tmux.conf ~/.tmux.conf.bak && \cp ~/.tmux.conf ~/github/vim-mac/dotfiles/TMUXCONF_MacOS.$(date "+%b_%d_%Y_%H.%M.%S").txt'
+alias sovim='\cp ~/.vimrc ~/.vimrc.bak && \cp ~/.vimrc ~/github/vim-mac/dotfiles/VIMRC.$(date "+%Y-%m-%d_%H%M%S").txt && echo "Whatttyyyaaaaa"'
+alias sotmux='\cp ~/.tmux.conf ~/.tmux.conf.bak && \cp ~/.tmux.conf ~/github/vim-mac/dotfiles/TMUXCONF_MacOS.$(date "+%Y-%m-%d_%H%M%S").txt'
 alias tmux3='tmux && tmux split-window -v -l 30 && tmux split-window -h'
 alias tmuxhh='tmux split-window -h -p 50'
 alias ebrc="vim ~/.bash_aliases"  # Quick access to the file in Vim
 alias evimrc="vim ~/.vimrc"
 alias etmux='vim ~/.tmux.conf' 
 ##=================MISC=========================##
-alias bashhxwipe="echo '' > ~/.bash_history"
+alias bashhxwipe="echo '' > ~/.bash_history && history -c"
 alias brewperms='sudo chown -R $(whoami) $(brew --prefix)/*'  #Resets screwed up brew permissions
 alias brewupgrade='brew update && brew upgrade'
 alias c='clear'
@@ -57,8 +58,8 @@ alias cx='chmod a+x' # Requires ARG e.g. $ cx *.txt etc
 alias chrome="open -a \"Google Chrome\""
 alias cleanupDS="find . -type f -name '*.DS_Store' -ls -delete"
 alias clamtest='wget http://www.eicar.org/download/eicar.com -O ~/eicar.com'
+alias strip='egrep -v "^#|^$"' ##ARG1=<file> strips comments/blanklines
 alias wipefree='sudo diskutil secureErase freespace 1 /Volumes/MacHD' # ARG1=PathToExtHD e.g. /Volumes/xxx\ Ext\ Drive
-
 
 alias h='history 40'
 alias j='jobs -l'
@@ -77,7 +78,8 @@ alias spk2='say "after a while ya just see blonde und brunette" && cmatrix'
 alias cpwd='pwd|tr -d "\n"|pbcopy'
 function yt() { sudo youtube-dl -U && youtube-dl -cit -f mp4 "$1" ; }
 #alias ckgy='vlc rtsp://newcap-RedDeer-CKGY.wm.llnwd.net/newcap_RedDeer-CKGY' # Country Radio?
-alias macupdate='sudo softwareupdate --install --all'
+alias macupdate='sudo softwareupdate --install --all && brew cask reinstall keepassxc'
+alias keepassupdate='brew cask reinstall keepassxc'
 alias macxcodetools='xcode-select --install'  # Installs Xcode SelectTools
 alias todo="echo $2 \`date +%FT%R\` >> ~/Documents/todo.log"
 ##=======Random Functions for PW generation (2 are Linux Only)=======##
@@ -108,7 +110,7 @@ alias loop='netstat -anp tcp | grep 127.0.0.1'  # Loopback interface tcp stats
 alias nface="scutil --nwi | grep interfaces: | cut -c 21-23"  #LINUX  netstat -r | grep default | awk '{print $8}'
 alias intip="ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'"
 alias intip0='ipconfig getifaddr en0'
-
+alias wgetovpn='wget https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip' ## Nordvpn .ovpn files
 
 alias intips="ifconfig $nface | grep inet | cut -d ' ' -f2"  #inet4 & inet6 intIP
 alias extip='curl ifconfig.io'
@@ -119,15 +121,17 @@ alias macch='sudo macchanger -r en4'
 alias geoip='curl ipinfo.io/"$1"'
 #geoip2() { read ip; curl ipinfo.io/$ip; }  #Alternative to read in the IP
 
-alias dnson='cd /opt/dnscrypt-proxy/ > /dev/null && sudo ./dnscrypt-proxy -service start'
-alias dnsstop='cd /opt/dnscrypt-proxy/ > /dev/null && sudo ./dnscrypt-proxy -service stop'
-alias dnsoff='cd /opt/dnscrypt-proxy/ > /dev/null && sudo ./dnscrypt-proxy -service stop'
-alias dnsoffon='cd /opt/dnscrypt-proxy/ > /dev/null && sudo ./dnscrypt-proxy -service restart'
-alias dnsv='cd /opt/dnscrypt-proxy/ > /dev/null && sudo ./dnscrypt-proxy -version'
-alias dnschk1='cd /opt/dnscrypt-proxy/ > /dev/null && sudo ./dnscrypt-proxy -check'
-alias dnschk2='cd /opt/dnscrypt-proxy/ > /dev/null && sudo ./dnscrypt-proxy -resolve example.com'
-alias dnsrm='cd /opt/dnscrypt-proxy/ > /dev/null && sudo ./dnscrypt-proxy -service uninstall'
+alias dnson='cd /opt/dnscrypt-proxy/macos/ > /dev/null && sudo ./dnscrypt-proxy -service start'
+alias dnsstop='cd /opt/dnscrypt-proxy/macos/ > /dev/null && sudo ./dnscrypt-proxy -service stop'
+alias dnsoff='cd /opt/dnscrypt-proxy/macos/ > /dev/null && sudo ./dnscrypt-proxy -service stop'
+alias dnsoffon='cd /opt/dnscrypt-proxy/macos/ > /dev/null && sudo ./dnscrypt-proxy -service restart'
+alias dnsv='cd /opt/dnscrypt-proxy/macos/ > /dev/null && sudo ./dnscrypt-proxy -version'
+alias dnschk1='cd /opt/dnscrypt-proxy/macos/ > /dev/null && sudo ./dnscrypt-proxy -check'
+alias dnschk2='cd /opt/dnscrypt-proxy/macos/ > /dev/null && sudo ./dnscrypt-proxy -resolve example.com'
+alias dnsrm='cd /opt/dnscrypt-proxy/macos/ > /dev/null && sudo ./dnscrypt-proxy -service uninstall'
 alias dnslsof='sudo lsof -Pni | grep dnscrypt'
+alias dnsdump443="sudo tcpdump -i en0 -vvv 'port 443' -w ~/Documents/tdump443.pcapng"
+alias dnsdump53="sudo tcpdump -i en0 -vvv 'port 53' -w ~/Documents/tdump53.pcapng"
 ##===============PF Firewall====================##
 alias pfanchors='sudo pfctl -v -v -s Anchors'  ## -verbose -verbose -show -Anchors
 alias pfedit='sudo vim /etc/pf.conf'  # Edit the pfctl config file for PFD Firewall
@@ -156,13 +160,12 @@ alias sshagent='ls /System/Library/LaunchAgents | grep ssh'
 alias sshgenrsa='ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa_mozilla_$(date +%Y-%m-%d) -C "Mozilla key for $USER"'
 alias sshgened25519='ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_mozilla_$(date +%Y-%m-%d) -C "Mozilla key for $USER"'
 alias sshgit='ssh -o FingerprintHash=md5 -Tv -i /Users/rdw/.ssh/id_ed25519_mozilla_2019-10-09 git@github.com'  #-T stops pseudoterminal warning
-alias sshkeys='ssh-keygen -lv -f ~/.ssh/id_rsa.pub && ssh-add -l'
-alias sshsyskeys='for file in *_key.pub; do   ssh-keygen -lvf $file; done'
-alias sshsyskeysmd5='for file in *_key.pub; do   ssh-keygen -lv -E md5 -f $file; done'
+alias sshsyskeys='for file in *.pub; do ssh-keygen -lvf $file; done'
+alias sshsyskeysmd5='for file in *.pub; do ssh-keygen -lv -E md5 -f $file; done'
 alias sshfpmd5='ssh-keygen -lv -E md5 -f'  ## -v for VisualHostKey & -E for Hash type. ARG1=somefile
 alias sshfp256='ssh-keygen -lv -f'  ## -v for VisualHostKey & default is for SHA256. ARG1=somefile
-alias sshagented='eval `ssh-agent` && sudo ssh-add ~/.ssh/id_ed25519_mozilla_2019-10-09 && sudo ssh-add -l && sudo ssh-agent -s && echo "ssh agent on so go"'
-alias sshagentrsa='eval `ssh-agent` && sudo ssh-add ~/.ssh/id_rsa_mozilla_2019-10-09 && sudo ssh-add -l && sudo ssh-agent -s && echo "ssh agent on so go"'
+alias sshagented='eval `ssh-agent` && ssh-add ~/.ssh/id_ed25519_mozilla_2019-10-09 && ssh-add -l && ssh-agent -s && echo "ssh agent on so go"'
+alias sshagentrsa='eval `ssh-agent` && ssh-add ~/.ssh/id_rsa_mozilla_2019-10-09 && ssh-add -l && ssh-agent -s && echo "ssh agent on so go"'
 alias sshpid='ps -e | grep ssh-agent | cut -d " " -f1'  #PID of ssh service so I can whack it
 #alias sshpid='ps -e | grep ssh-agent | cut -d " " -f1 && sudo killall ssh-agent && '  #Need a restart method
 function sshciphers() { 
@@ -182,7 +185,7 @@ alias cpustats='iostat'
 alias flush="sudo killall -HUP mDNSResponder"
 alias free='/opt/pkg/bin/free'  #Kid get yaself a system
 alias hd="tail -n 35 /var/log/daily.out | grep /dev/disk1 | awk {'print \$5'}"  #Mac HD Avail Space
-alias df='df -ha $HOME' # Human readable Home DIR only with mountpoints
+alias dfhome='df -ha $HOME' # Human readable Home DIR only with mountpoints
 alias duhome='du -chd 1 | grep -i total'  # Size Home DIR in GB
 alias duhome2='du -chd 1'  # Size Home DIRs in GB
 
@@ -266,9 +269,10 @@ alias osslpubkey='openssl rsa -in private.pem -outform PEM -pubout -out public.p
 alias osslkeys='openssl genrsa -out private.pem 4096 && openssl rsa -in private.pem -outform PEM -pubout -out public.pem' #4096bit PEM Key Pair
 
 # tcpdump aliases use -I to turn on Monitor Mode only for WiFi Interface
-tdump () { sudo tcpdump -i $(nface) -pnnvvveXXSs 1514 -c2000 -w /tmp/tdump2k.pcapng ; }
-tdumpwifi () { sudo tcpdump -i $(nface) -IpnnvvveXXSs 1514 -c2000 -w /tmp/tdump2k.pcapng ; }
-tdumpping () { sudo tcpdump -i $(nface) -IpennvXXSs 1514 icmp -c20 -w /tmp/tdumpping.pcapng ; }
+tdump () { sudo tcpdump -i en1 -PennvvvXXSs 1514 -c2000 -w ~/Downloads/tdump2k.pcapng ; }
+tdumpwifi () { sudo tcpdump -i en1 -IPennvvvXXSs 1514 -c2000 -w ~/Downloads/tdump2k.pcapng ; }
+tdumpping () { sudo tcpdump -i en1 -IPennvvvXXSs 1514 icmp -c20 -w ~/Downloads/tdumpping.pcapng ; }
+
 function sanitize() { chmod -R u=rwX,g=rX,o= "$@" ;}  #$sanitize file/DIR Permissions
 
 ##===========Pkgsrc Package Manager=============##
@@ -295,7 +299,7 @@ alias gl="git log --pretty=format:'%h %ad | %s [%an]' --graph --since='30 days a
 alias gogit='cd ~/github/vim-mac/dotfiles && gs'
 alias gk='gitk --all&'
 alias gx='gitx --all'
-alias gitdelete='git add -u . && git commit -m "removing deleted files from tracking" && git push origin master'
+alias gdel='git add -u . && git commit -m "removing deleted files from tracking" && git push origin master'
 # NOTE: hist alias in .gitconfig used as git hist gives a pretty=format history
 # https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
 alias gitjustify='git remote set-url origin git@github.com:jomsai/Vim-rep.git' #Stops git push asking for password 
